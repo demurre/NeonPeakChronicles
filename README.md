@@ -1,49 +1,13 @@
-# Phaser 3 Webpack Project Template
-
-A Phaser 3 project template with ES6 support via [Babel 7](https://babeljs.io/) and [Webpack 4](https://webpack.js.org/) that includes hot-reloading for development and production-ready builds.
-
-This has been updated for Phaser 3.50.0 version and above.
-
-Loading images via JavaScript module `import` is also supported, although not recommended.
-
-## Requirements
-
-[Node.js](https://nodejs.org) is required to install dependencies and run scripts via `npm`.
-
-## Available Commands
-
-| Command | Description |
-|---------|-------------|
-| `npm install` | Install project dependencies |
-| `npm start` | Build project and open web server running project |
-| `npm run build` | Builds code bundle with production settings (minification, uglification, etc..) |
-
-## Writing Code
-
-After cloning the repo, run `npm install` from your project directory. Then, you can start the local development server by running `npm start`.
-
-After starting the development server with `npm start`, you can edit any files in the `src` folder and webpack will automatically recompile and reload your server (available at `http://localhost:8080` by default).
-
-## Customizing the Template
-
-### Babel
-
-You can write modern ES6+ JavaScript and Babel will transpile it to a version of JavaScript that you want your project to support. The targeted browsers are set in the `.babelrc` file and the default currently targets all browsers with total usage over "0.25%" but excludes IE11 and Opera Mini.
-
- ```
-"browsers": [
-  ">0.25%",
-  "not ie 11",
-  "not op_mini all"
-]
- ```
-
-### Webpack
-
-If you want to customize your build, such as adding a new webpack loader or plugin (i.e. for loading CSS or fonts), you can modify the `webpack/base.js` file for cross-project changes, or you can modify and/or create new configuration files and target them in specific npm tasks inside of `package.json'.
-
-## Deploying Code
-
-After you run the `npm run build` command, your code will be built into a single bundle located at `dist/bundle.min.js` along with any other assets you project depended. 
-
-If you put the contents of the `dist` folder in a publicly-accessible location (say something like `http://mycoolserver.com`), you should be able to open `http://mycoolserver.com/index.html` and play your game.
+## Game with using JavaScript and framework Phaser
+## Main Hero:
+![mainhero](https://github.com/demurre/Rogue-like/assets/117121382/c6532db3-6b03-48a7-9c63-84cd4cddfaa9)
+## Enemies:
+![enemie1](https://github.com/demurre/Rogue-like/assets/117121382/47588d07-cdae-4fe4-8191-0d83a4157a04)
+![enemie2](https://github.com/demurre/Rogue-like/assets/117121382/bd7f8f9b-f148-432b-8902-6b48f677bc00)
+![enemie3](https://github.com/demurre/Rogue-like/assets/117121382/fe5e7491-168c-4b60-b8e1-ac61e1183d90)
+## Cards:
+![dmgcard](https://github.com/demurre/Rogue-like/assets/117121382/aab8230c-1b8a-4955-ab31-979f4cd65357)
+![armorcard](https://github.com/demurre/Rogue-like/assets/117121382/968280a8-99a4-4a84-9c1d-9150ff3cdc8d)
+![healcard](https://github.com/demurre/Rogue-like/assets/117121382/bf76711b-7a80-4fa4-a431-7332b7c35715)
+![poisoncard](https://github.com/demurre/Rogue-like/assets/117121382/2c3e42b7-2bdd-4bd5-9aac-934bd857e169)
+![weakcard](https://github.com/demurre/Rogue-like/assets/117121382/d51fb352-c1c2-4b33-b545-e25a81f604da)
