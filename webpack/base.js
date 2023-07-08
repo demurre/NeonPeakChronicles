@@ -1,39 +1,41 @@
-import { DefinePlugin } from 'webpack';
-import { resolve } from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+const webpack = require('webpack');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-export const mode = 'development';
-export const devtool = 'eval-source-map';
-export const module = {
-  rules: [
-    {
-      test: /\.js$/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader',
+module.exports = {
+  mode: 'development',
+  devtool: 'eval-source-map',
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        },
       },
-    },
-    {
-      test: [/\.vert$/, /\.frag$/],
-      use: 'raw-loader',
-    },
-    {
-      test: /\.(gif|png|jpe?g|svg|xml)$/i,
-      use: 'file-loader',
-    },
+      {
+        test: [/\.vert$/, /\.frag$/],
+        use: 'raw-loader',
+      },
+      {
+        test: /\.(gif|png|jpe?g|svg|xml)$/i,
+        use: 'file-loader',
+      },
+    ],
+  },
+  plugins: [
+    new CleanWebpackPlugin({
+      // eslint-disable-next-line no-undef
+      root: path.resolve(__dirname, '../'),
+    }),
+    new webpack.DefinePlugin({
+      CANVAS_RENDERER: JSON.stringify(true),
+      WEBGL_RENDERER: JSON.stringify(true),
+    }),
+    new HtmlWebpackPlugin({
+      template: './index.html',
+    }),
   ],
 };
-export const plugins = [
-  new CleanWebpackPlugin({
-    // eslint-disable-next-line no-undef
-    root: resolve(__dirname, '../'),
-  }),
-  new DefinePlugin({
-    CANVAS_RENDERER: JSON.stringify(true),
-    WEBGL_RENDERER: JSON.stringify(true),
-  }),
-  new HtmlWebpackPlugin({
-    template: './index.html',
-  }),
-];

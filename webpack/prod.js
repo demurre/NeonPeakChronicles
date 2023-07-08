@@ -1,8 +1,9 @@
-import merge from 'webpack-merge';
-import base from './base';
-import TerserPlugin from 'terser-webpack-plugin';
+const merge = require('webpack-merge');
+const path = require('path');
+const base = require('./base');
+const TerserPlugin = require('terser-webpack-plugin');
 
-export default merge(base, {
+module.exports = merge(base, {
   mode: 'production',
   output: {
     filename: 'bundle.min.js',
