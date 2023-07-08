@@ -1,28 +1,13 @@
 /* eslint-disable no-unused-vars */
 import Phaser from 'phaser';
+import imageLoader from './loaders/images';
 
 const fullWidthScreen = window.innerWidth;
 const fullHeightScreen = window.innerHeight;
 
 class MyGame extends Phaser.Scene {
   preload() {
-    this.load.image('background', 'src/gamePicture/startPageBg.png');
-    this.load.image('gBackground', 'src/gamePicture/gamePageBg.png');
-    this.load.image('mainCharacter', 'src/gamePicture/mainHero.png');
-    this.load.image('enemy1', 'src/gamePicture/enemy1.png');
-    this.load.image('enemy2', 'src/gamePicture/enemy2.png');
-    this.load.image('enemy3', 'src/gamePicture/enemy3.png');
-    this.load.image('boss', 'src/gamePicture/finalBossBg.png');
-    this.load.image('card1', 'src/gamePicture/dmgCard1.png');
-    this.load.image('card2', 'src/gamePicture/armorCard1.png');
-    this.load.image('card3', 'src/gamePicture/healCard1.png');
-    this.load.image('card4', 'src/gamePicture/poisonCard1.png');
-    this.load.image('card5', 'src/gamePicture/weakCard1.png');
-    this.load.image('hpbar40', 'src/gamePicture/40.png');
-    this.load.image('hpbar30', 'src/gamePicture/30.png');
-    this.load.image('hpbar20', 'src/gamePicture/20.png');
-    this.load.image('hpbar10', 'src/gamePicture/10.png');
-    this.load.image('armoBar', 'src/gamePicture/armorBar.png');
+    imageLoader(this);
   }
 
   create() {
