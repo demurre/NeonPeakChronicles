@@ -12,9 +12,14 @@ const imageLoader = (game) => {
   game.load.image('card4', 'src/assets/cards/poison.png');
   game.load.image('card5', 'src/assets/cards/weak.png');
   game.load.image('hpbar40', 'src/assets/bars/40.png');
+  game.load.image('hpbar35', 'src/assets/bars/35.png');
   game.load.image('hpbar30', 'src/assets/bars/30.png');
+  game.load.image('hpbar25', 'src/assets/bars/25.png');
   game.load.image('hpbar20', 'src/assets/bars/20.png');
+  game.load.image('hpbar15', 'src/assets/bars/15.png');
   game.load.image('hpbar10', 'src/assets/bars/10.png');
+  game.load.image('hpbar5', 'src/assets/bars/5.png');
+  game.load.image('hpbar0', 'src/assets/bars/0.png');
   game.load.image('armoBar', 'src/assets/bars/armor.png');
 };
 export default imageLoader;

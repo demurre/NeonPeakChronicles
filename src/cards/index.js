@@ -1,8 +1,11 @@
 import { fullHeightScreen, fullWidthScreen } from '../utilities/consts';
+
 const addEvents = (game, cards) => {
-  let centerCard = null; // Змінна для зберігання посилання на картку в центрі
+  let centerCard = null;
+
   cards.forEach((card) => {
     const { x, y, z } = { ...card };
+
     game.tweens.add({
       targets: card,
       x,
@@ -14,7 +17,6 @@ const addEvents = (game, cards) => {
       onComplete: () => {
         card.on('pointerdown', () => {
           if (centerCard === card) {
-            // Картка вже в центрі, повернення на початкові координати
             game.tweens.add({
               targets: card,
               x,
@@ -23,9 +25,8 @@ const addEvents = (game, cards) => {
               duration: 500,
               ease: 'Power2',
             });
-            centerCard = null; // Встановлюємо центральну картку в значення null
+            centerCard = null;
           } else if (centerCard === null) {
-            // Переміщення картки в центр, якщо немає жодної картки в центрі
             const centerX = fullWidthScreen / 2;
             const centerY = fullHeightScreen / 2;
             const cardWidth = card.displayWidth * card.scaleX;
@@ -41,25 +42,25 @@ const addEvents = (game, cards) => {
               duration: 500,
               ease: 'Power2',
             });
-            centerCard = card; // Зберігаємо посилання на центральну картку
+            centerCard = card;
           }
 
-          // Виконання відповідних дій для кожної карти
+          // Виклик відповідної функції в залежності від карти
           switch (card) {
             case card1:
-              game.attackEnemy(card, 5);
+              game.attackEnemy(game.mainCharacter, 5);
               break;
             case card2:
-              game.addArmorToMainCharacter(card, 5);
+              game.addArmorToMainCharacter(game.mainCharacter, 5);
               break;
             case card3:
-              game.restoreHPToMainCharacter(card);
+              game.restoreHPToMainCharacter(game.mainCharacter);
               break;
             case card4:
-              game.applyPoisonEffect(card);
+              game.applyPoisonEffect(game.enemies.getFirstAlive());
               break;
             case card5:
-              game.applyWeakEffect(card);
+              game.applyWeakEffect(game.enemies.getFirstAlive());
               break;
           }
         });
@@ -67,11 +68,13 @@ const addEvents = (game, cards) => {
     });
   });
 };
+
 const createCard = ({ game, x, name } = props) =>
   game.add
     .image((fullWidthScreen / 10) * x, (fullHeightScreen / 14) * 13, name)
     .setScale(0.5)
     .setInteractive();
+
 const init = (game) => {
   const card1 = createCard({ game, x: 3, name: 'card1' });
   const card2 = createCard({ game, x: 4, name: 'card2' });
@@ -82,4 +85,5 @@ const init = (game) => {
   const cards = [card1, card2, card3, card4, card5];
   addEvents(game, cards);
 };
+
 export default init;
