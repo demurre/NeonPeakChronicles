@@ -1,36 +1,43 @@
+import { getStateValue, setStateValue } from '../store';
 import { attack } from './actions';
 import { createCharacter, createHPBar } from './shared';
 
 const init = (game) => {
+  const baseAttack = 5;
+  const baseHP = 40;
+  const currentHP = 40;
+
+  const enemyState = {
+    baseAttack,
+    baseHP,
+    currentHP,
+  };
+
   const enemy1 = createCharacter({ game, x: 7, name: 'enemy1' });
-  enemy1.baseAttack = 5;
-  enemy1.baseHP = 40;
-  enemy1.currentHP = enemy1.baseHP;
   const enemy1HPBar = createHPBar({
     game,
     x: 7,
     yOffset: enemy1.height,
     xOffset: 45,
-    HP: enemy1.currentHP,
-    baseHP: enemy1.baseHP,
+    HP: currentHP,
+    baseHP: baseHP,
   });
-  enemy1.hpBar = enemy1HPBar;
+
+  setStateValue('enemy1', { ...enemyState, HPBar: enemy1HPBar, x: 7, xOffset: 45, yOffset: enemy1.height });
 
   const enemy2 = createCharacter({ game, x: 9, name: 'enemy2' });
-  enemy2.baseAttack = 5;
-  enemy2.baseHP = 40;
-  enemy2.currentHP = enemy2.baseHP;
   const enemy2HPBar = createHPBar({
     game,
     x: 9,
     yOffset: enemy2.height,
     xOffset: 45,
-    HP: enemy2.currentHP,
-    baseHP: enemy2.baseHP,
+    HP: currentHP,
+    baseHP: baseHP,
   });
-  enemy2.hpBar = enemy2HPBar;
 
-  attack({ game, damage: 5, character: enemy1 });
+  setStateValue('enemy2', { ...enemyState, HPBar: enemy2HPBar, x: 9, xOffset: 45, yOffset: enemy2.height });
+
+  attack({ game, damage: 5, name: 'enemy1' });
 };
 
 export default init;

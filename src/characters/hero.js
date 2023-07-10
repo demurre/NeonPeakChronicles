@@ -1,18 +1,32 @@
+import { setStateValue } from '../store';
 import { createCharacter, createHPBar } from './shared';
 
 const initMainCharacter = (game) => {
   const mainCharacter = createCharacter({ game, x: 2, name: 'mainCharacter' });
-  mainCharacter.baseHP = 40;
-  mainCharacter.currentHP = mainCharacter.baseHP;
-  const { HPBar } = createHPBar({
+  const baseHP = 40;
+  const currentHP = 40;
+
+  const mainCharacterState = {
+    baseHP,
+    currentHP,
+  };
+
+  const HPBar = createHPBar({
     game,
     x: 2,
     yOffset: mainCharacter.height,
     xOffset: 0,
-    HP: mainCharacter.currentHP,
-    baseHP: mainCharacter.baseHP,
+    HP: currentHP,
+    baseHP: baseHP,
   });
-  mainCharacter.hpBar = HPBar;
+
+  setStateValue('mainCharacter', {
+    ...mainCharacterState,
+    HPBar,
+    x: 2,
+    xOffset: 0,
+    yOffset: mainCharacter.height,
+  });
 };
 
 export default initMainCharacter;

@@ -1,10 +1,10 @@
 import { fullHeightScreen, fullWidthScreen } from '../utilities/consts';
 import theme from '../utilities/theme';
 
-const createCharacter = ({ game, name, x } = props) =>
+const createCharacter = ({ game, name, x }) =>
   game.add.image((fullWidthScreen / 10) * x, (fullHeightScreen / 3) * 2, name).setScale(0.5);
 
-const createHPBar = ({ game, x, yOffset, xOffset, HP, baseHP } = props) => {
+const createHPBar = ({ game, x, yOffset, xOffset, HP, baseHP }) => {
   const xPoint = (fullWidthScreen / 10) * x - xOffset;
   const yPoint = (fullHeightScreen / 10) * 9 - yOffset / 2;
 

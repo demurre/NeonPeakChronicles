@@ -6,6 +6,7 @@ import initGameScreen from './screens/game';
 import initMainCharacter from './characters/hero';
 import initEnemies from './characters/enemies';
 import initCards from './cards';
+import { getStateValue } from './store';
 import { createHPBar } from './characters/shared';
 
 class MyGame extends Phaser.Scene {
@@ -40,9 +41,18 @@ class MyGame extends Phaser.Scene {
     initCards(this);
   }
 
-  updateHPBar(character) {
-    const { currentHP, baseHP, x, yOffset, xOffset } = character;
-    createHPBar({ game: this, HP: currentHP, baseHP, x, yOffset, xOffset });
+  updateHPBar(name) {
+    const { HPBar, currentHP, baseHP, x, xOffset, yOffset } = getStateValue(name);
+
+    HPBar.clear();
+    createHPBar({
+      game: this,
+      x,
+      yOffset,
+      xOffset,
+      HP: currentHP,
+      baseHP: baseHP,
+    });
   }
 }
 
