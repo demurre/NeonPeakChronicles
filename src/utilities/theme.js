@@ -12,6 +12,7 @@ const theme = {
   size: {
     large: '32px',
     medium: '24px',
+    small: '12px',
   },
   fontFamily: {
     primary: 'Interstatic',

@@ -24,9 +24,9 @@ const createHPBar = ({ game, x, yOffset, xOffset, HP, baseHP }) => {
 
   // Додавання чисел на HP-бар
   const HPText = game.add.text(xPoint + 50, yPoint + 12, `${HP}/${baseHP}`, {
-    fontFamily: 'Arial',
-    fontSize: '12px',
-    color: '#ffffff',
+    fontFamily: theme.fontFamily.primary,
+    fontSize: theme.size.small,
+    color: theme.colors.font.primary,
     align: 'center',
   });
   HPText.setOrigin(0.5);
