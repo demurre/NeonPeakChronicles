@@ -21,6 +21,16 @@ const createHPBar = ({ game, x, yOffset, xOffset, HP, baseHP }) => {
   };
   HPBar.fillStyle(HPBarStyle.fillStyle.color);
   HPBar.fillRect(xPoint, yPoint, (100 / baseHP) * HP, 25);
+
+  // Додавання чисел на HP-бар
+  const HPText = game.add.text(xPoint + 50, yPoint + 12, `${HP}/${baseHP}`, {
+    fontFamily: 'Arial',
+    fontSize: '12px',
+    color: '#ffffff',
+    align: 'center',
+  });
+  HPText.setOrigin(0.5);
+
   return HPBar;
 };
 
