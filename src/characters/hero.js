@@ -1,20 +1,18 @@
 import { createCharacter, createHPBar } from './shared';
 
-const init = (game) => {
+const initMainCharacter = (game) => {
   const mainCharacter = createCharacter({ game, x: 2, name: 'mainCharacter' });
   mainCharacter.baseHP = 40;
   mainCharacter.currentHP = mainCharacter.baseHP;
-  mainCharacter.x = 2;
-  mainCharacter.yOffset = mainCharacter.height;
-  mainCharacter.xOffset = 0;
-
-  createHPBar({
+  const { HPBar } = createHPBar({
     game,
-    x: mainCharacter.x,
-    yOffset: mainCharacter.yOffset,
-    xOffset: mainCharacter.xOffset,
+    x: 2,
+    yOffset: mainCharacter.height,
+    xOffset: 0,
     HP: mainCharacter.currentHP,
     baseHP: mainCharacter.baseHP,
   });
+  mainCharacter.hpBar = HPBar;
 };
-export default init;
+
+export default initMainCharacter;

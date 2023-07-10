@@ -1,3 +1,4 @@
+import { attack } from './actions';
 import { createCharacter, createHPBar } from './shared';
 
 const init = (game) => {
@@ -5,33 +6,31 @@ const init = (game) => {
   enemy1.baseAttack = 5;
   enemy1.baseHP = 40;
   enemy1.currentHP = enemy1.baseHP;
-  enemy1.x = 7;
-  enemy1.yOffset = enemy1.height;
-  enemy1.xOffset = 45;
-  createHPBar({
+  const enemy1HPBar = createHPBar({
     game,
-    x: enemy1.x,
-    yOffset: enemy1.yOffset,
-    xOffset: enemy1.xOffset,
+    x: 7,
+    yOffset: enemy1.height,
+    xOffset: 45,
     HP: enemy1.currentHP,
     baseHP: enemy1.baseHP,
   });
+  enemy1.hpBar = enemy1HPBar;
 
   const enemy2 = createCharacter({ game, x: 9, name: 'enemy2' });
   enemy2.baseAttack = 5;
   enemy2.baseHP = 40;
   enemy2.currentHP = enemy2.baseHP;
-  enemy2.x = 9;
-  enemy2.yOffset = enemy2.height;
-  enemy2.xOffset = 45;
-  createHPBar({
+  const enemy2HPBar = createHPBar({
     game,
-    x: enemy2.x,
-    yOffset: enemy2.yOffset,
-    xOffset: enemy2.xOffset,
+    x: 9,
+    yOffset: enemy2.height,
+    xOffset: 45,
     HP: enemy2.currentHP,
     baseHP: enemy2.baseHP,
   });
+  enemy2.hpBar = enemy2HPBar;
+
+  attack({ game, damage: 5, character: enemy1 });
 };
 
 export default init;

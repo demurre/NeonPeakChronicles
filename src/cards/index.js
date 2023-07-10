@@ -44,25 +44,6 @@ const addEvents = (game, cards) => {
             });
             centerCard = card;
           }
-
-          // Виклик відповідної функції в залежності від карти
-          switch (card) {
-            case card1:
-              game.attackEnemy(game.mainCharacter, 5);
-              break;
-            case card2:
-              game.addArmorToMainCharacter(game.mainCharacter, 5);
-              break;
-            case card3:
-              game.restoreHPToMainCharacter(game.mainCharacter);
-              break;
-            case card4:
-              game.applyPoisonEffect(game.enemies.getFirstAlive());
-              break;
-            case card5:
-              game.applyWeakEffect(game.enemies.getFirstAlive());
-              break;
-          }
         });
       },
     });

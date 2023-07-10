@@ -21,6 +21,7 @@ const createHPBar = ({ game, x, yOffset, xOffset, HP, baseHP } = props) => {
   };
   HPBar.fillStyle(HPBarStyle.fillStyle.color);
   HPBar.fillRect(xPoint, yPoint, (100 / baseHP) * HP, 25);
+  return HPBar;
 };
 
 export { createCharacter, createHPBar };
