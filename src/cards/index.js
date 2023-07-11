@@ -50,7 +50,7 @@ const addEvents = (game, cards) => {
   });
 };
 
-const createCard = ({ game, x, name } = props) =>
+const createCard = ({ game, x, name }) =>
   game.add
     .image((fullWidthScreen / 10) * x, (fullHeightScreen / 14) * 13, name)
     .setScale(0.5)
