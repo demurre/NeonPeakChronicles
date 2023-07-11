@@ -6,7 +6,7 @@ import initGameScreen from './screens/game';
 import initMainCharacter from './characters/hero';
 import initEnemies from './characters/enemies';
 import initCards from './cards';
-import { getStateValue } from './store';
+import { getStateValue, setStateValue } from './store';
 import { createArmorBar, createHPBar } from './characters/shared';
 
 class MyGame extends Phaser.Scene {
@@ -42,27 +42,56 @@ class MyGame extends Phaser.Scene {
   }
 
   updateHPBar(name) {
-    const { currentHP, baseHP, x, xOffset, yOffset } = getStateValue(name);
+    const character = getStateValue(name);
+    const { currentHP, baseHP, x, xOffset, yOffset, bars } = character;
+    const { HPBar, HPText, HPBarBg } = bars;
 
-    createHPBar({
-      game: this,
-      x,
-      yOffset,
-      xOffset,
-      HP: currentHP,
-      baseHP: baseHP,
+    HPBar.destroy();
+    HPText.destroy();
+    HPBarBg.destroy();
+
+    setStateValue(name, {
+      ...character,
+      bars: {
+        ...bars,
+        ...createHPBar({
+          game: this,
+          x,
+          yOffset,
+          xOffset,
+          HP: currentHP,
+          baseHP: baseHP,
+        }),
+      },
     });
   }
-  updateArmorBar(name) {
-    const { currentArmor, baseArmor, x, xOffset, yOffset } = getStateValue(name);
 
-    createArmorBar({
-      game: this,
-      x,
-      yOffset,
-      xOffset,
-      armor: currentArmor,
-      baseArmor: baseArmor,
+  updateArmorBar(name) {
+    const character = getStateValue(name);
+    const { currentArmor, x, xOffset, yOffset, bars } = character;
+    const { armorBar, armorText } = bars;
+
+    if (armorBar && armorText) {
+      armorBar.destroy();
+      armorText.destroy();
+    }
+
+    const newArmorBar = currentArmor
+      ? createArmorBar({
+          game: this,
+          x,
+          yOffset,
+          xOffset,
+          armor: currentArmor,
+        })
+      : { armorBar: null, armorText: null };
+
+    setStateValue(name, {
+      ...character,
+      bars: {
+        ...bars,
+        ...newArmorBar,
+      },
     });
   }
 }

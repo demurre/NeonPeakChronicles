@@ -1,27 +1,35 @@
 import { getStateValue, setStateValue } from '../store';
 
-const attack = ({ game, damage, name }) => {
-  const oldCharacter = getStateValue(name);
+const makeSafe = (number) => Math.max(0, number);
 
-  if (oldCharacter.currentArmor > 0) {
-    const remainingDamage = Math.max(0, damage - oldCharacter.currentArmor);
-    const currentArmor = Math.max(0, oldCharacter.currentArmor - damage);
-    const currentHP = Math.max(0, oldCharacter.currentHP - remainingDamage);
-    setStateValue(name, { ...oldCharacter, currentArmor, currentHP });
+const attack = ({ game, damage, name }) => {
+  const character = getStateValue(name);
+
+  if (character.currentArmor) {
+    const remainingDamage = makeSafe(damage - character.currentArmor);
+    const currentArmor = makeSafe(character.currentArmor - damage);
+    const currentHP = makeSafe(character.currentHP - remainingDamage);
+
+    setStateValue(name, { ...character, currentArmor, currentHP });
+
     game.updateArmorBar(name);
     game.updateHPBar(name);
   } else {
-    const currentHP = Math.max(0, oldCharacter.currentHP - damage);
-    setStateValue(name, { ...oldCharacter, currentHP });
+    const currentHP = makeSafe(character.currentHP - damage);
+
+    setStateValue(name, { ...character, currentHP });
+
     game.updateHPBar(name);
   }
 };
 
 const def = ({ game, armor, name }) => {
-  const oldCharacter = getStateValue(name);
-  const currentArmor = oldCharacter.currentArmor + armor;
-  setStateValue(name, { ...oldCharacter, currentArmor });
+  const character = getStateValue(name);
+  const currentArmor = character.currentArmor + armor;
+
+  setStateValue(name, { ...character, currentArmor });
 
   game.updateArmorBar(name);
 };
+
 export { attack, def };

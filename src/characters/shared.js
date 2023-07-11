@@ -30,26 +30,19 @@ const createHPBar = ({ game, x, yOffset, xOffset, HP, baseHP }) => {
   });
   HPText.setOrigin(0.5);
 
-  return HPBar;
+  return { HPBar, HPText, HPBarBg };
 };
 
-const createArmorBar = ({ game, x, yOffset, xOffset, armor, baseArmor }) => {
+const createArmorBar = ({ game, x, yOffset, xOffset, armor }) => {
   const xPoint = (fullWidthScreen / 10) * x - xOffset;
   const yPoint = (fullHeightScreen / 7) * 6 - yOffset / 2;
 
-  const armorBarBg = game.add.graphics();
-  const armorBarBgStyle = {
-    fillStyle: { color: theme.colors.surface.darkBlue },
-  };
-  armorBarBg.fillStyle(armorBarBgStyle.fillStyle.color);
-  armorBarBg.fillRect(xPoint, yPoint, 100, 25);
-
   const armorBar = game.add.graphics();
   const armorBarStyle = {
-    fillStyle: { color: theme.colors.surface.skyBlue },
+    fillStyle: { color: theme.colors.surface.darkBlue },
   };
   armorBar.fillStyle(armorBarStyle.fillStyle.color);
-  armorBar.fillRect(xPoint, yPoint, (100 / baseArmor) * armor, 25);
+  armorBar.fillRect(xPoint, yPoint, 100, 25);
 
   const armorText = game.add.text(xPoint + 50, yPoint + 12, `${armor}`, {
     fontFamily: theme.fontFamily.primary,
@@ -59,7 +52,7 @@ const createArmorBar = ({ game, x, yOffset, xOffset, armor, baseArmor }) => {
   });
   armorText.setOrigin(0.5);
 
-  return armorBar;
+  return { armorBar, armorText };
 };
 
 export { createCharacter, createHPBar, createArmorBar };
