@@ -1,5 +1,5 @@
-import { getStateValue, setStateValue } from '../store';
-import { attack } from './actions';
+import { setStateValue } from '../store';
+//import { attack } from './actions';
 import { createCharacter, createHPBar } from './shared';
 
 const init = (game) => {
@@ -13,7 +13,7 @@ const init = (game) => {
     currentHP,
   };
 
-  const enemy1 = createCharacter({ game, x: 7, name: 'enemy1' });
+  const enemy1 = createCharacter({ game, x: 7, name: 'enemy1', isClicked: false });
   const enemy1HPBar = createHPBar({
     game,
     x: 7,
@@ -25,7 +25,7 @@ const init = (game) => {
 
   setStateValue('enemy1', { ...enemyState, HPBar: enemy1HPBar, x: 7, xOffset: 45, yOffset: enemy1.height });
 
-  const enemy2 = createCharacter({ game, x: 9, name: 'enemy2' });
+  const enemy2 = createCharacter({ game, x: 9, name: 'enemy2', isClicked: false });
   const enemy2HPBar = createHPBar({
     game,
     x: 9,
@@ -37,7 +37,8 @@ const init = (game) => {
 
   setStateValue('enemy2', { ...enemyState, HPBar: enemy2HPBar, x: 9, xOffset: 45, yOffset: enemy2.height });
 
-  attack({ game, damage: 25, name: 'enemy1' });
+  //attack({ game, damage: 25, name: 'enemy1' });
+  //attack({ game, damage: 35, name: 'enemy2' });
 };
 
 export default init;

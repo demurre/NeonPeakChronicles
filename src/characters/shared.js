@@ -22,10 +22,9 @@ const createHPBar = ({ game, x, yOffset, xOffset, HP, baseHP }) => {
   HPBar.fillStyle(HPBarStyle.fillStyle.color);
   HPBar.fillRect(xPoint, yPoint, (100 / baseHP) * HP, 25);
 
-  // Додавання чисел на HP-бар
   const HPText = game.add.text(xPoint + 50, yPoint + 12, `${HP}/${baseHP}`, {
     fontFamily: theme.fontFamily.primary,
-    fontSize: theme.size.small,
+    fontSize: theme.size.medium,
     color: theme.colors.font.primary,
     align: 'center',
   });
@@ -34,4 +33,33 @@ const createHPBar = ({ game, x, yOffset, xOffset, HP, baseHP }) => {
   return HPBar;
 };
 
-export { createCharacter, createHPBar };
+const createArmorBar = ({ game, x, yOffset, xOffset, armor, baseArmor }) => {
+  const xPoint = (fullWidthScreen / 10) * x - xOffset;
+  const yPoint = (fullHeightScreen / 7) * 6 - yOffset / 2;
+
+  const armorBarBg = game.add.graphics();
+  const armorBarBgStyle = {
+    fillStyle: { color: theme.colors.surface.darkBlue },
+  };
+  armorBarBg.fillStyle(armorBarBgStyle.fillStyle.color);
+  armorBarBg.fillRect(xPoint, yPoint, 100, 25);
+
+  const armorBar = game.add.graphics();
+  const armorBarStyle = {
+    fillStyle: { color: theme.colors.surface.skyBlue },
+  };
+  armorBar.fillStyle(armorBarStyle.fillStyle.color);
+  armorBar.fillRect(xPoint, yPoint, (100 / baseArmor) * armor, 25);
+
+  const armorText = game.add.text(xPoint + 50, yPoint + 12, `${armor}`, {
+    fontFamily: theme.fontFamily.primary,
+    fontSize: theme.size.medium,
+    color: theme.colors.font.primary,
+    align: 'center',
+  });
+  armorText.setOrigin(0.5);
+
+  return armorBar;
+};
+
+export { createCharacter, createHPBar, createArmorBar };
