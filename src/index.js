@@ -3,49 +3,33 @@ import imageLoader from './loaders/images';
 import { fullHeightScreen, fullWidthScreen } from './utilities/consts';
 import initStartScreen from './screens/start';
 import initGameScreen from './screens/game';
-import initMainCharacter from './characters/hero';
+import initHero from './characters/hero';
 import initEnemies from './characters/enemies';
-import initCards from './events';
 import { getStateValue, setStateValue } from './store';
 import { createArmorBar, createHPBar } from './characters/shared';
+import initCards from './cards';
+import addEvents from './events';
 
 class MyGame extends Phaser.Scene {
   preload() {
     imageLoader(this);
   }
-
   create() {
     initStartScreen(this);
   }
 
   startGame() {
-    this.createBackground();
-    this.createMainCharacter();
-    this.createEnemies();
-    this.createCards();
+    this.init();
   }
 
-  createBackground() {
+  init() {
     initGameScreen(this);
-  }
+    const enemies = initEnemies(this);
+    const hero = initHero(this);
+    const cards = initCards(this);
 
-  createMainCharacter() {
-    initMainCharacter(this);
+    addEvents(this, { cards, enemies, hero });
   }
-
-  createEnemies() {
-    initEnemies(this);
-  }
-
-  createCards() {
-    initCards(this);
-  }
-
-  //createInit() {
-  //  initCards(cards);
-  //  initEnemies(enemies);
-  //  initMainCharacter(MainCharacter);
-  //}
 
   updateHPBar(name) {
     const character = getStateValue(name);

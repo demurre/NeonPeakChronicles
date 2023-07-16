@@ -13,7 +13,7 @@ const init = (game) => {
     currentHP,
   };
 
-  const enemy1 = createCharacter({ game, x: 7, name: 'enemy1', isClicked: false });
+  const enemy1 = createCharacter({ game, x: 7, name: 'enemy1', isClicked: true });
 
   const enemyBars1 = {
     ...createHPBar({
@@ -28,7 +28,7 @@ const init = (game) => {
 
   setStateValue('enemy1', { ...enemyState, bars: enemyBars1, x: 7, xOffset: 45, yOffset: enemy1.height });
 
-  const enemy2 = createCharacter({ game, x: 9, name: 'enemy2', isClicked: false });
+  const enemy2 = createCharacter({ game, x: 9, name: 'enemy2', isClicked: true });
   const enemyBars2 = {
     ...createHPBar({
       game,
@@ -42,7 +42,7 @@ const init = (game) => {
 
   setStateValue('enemy2', { ...enemyState, bars: enemyBars2, x: 9, xOffset: 45, yOffset: enemy2.height });
 
-  const enemies = [enemy1, enemy2];
+  return [enemy1, enemy2];
   // attack({ game, damage: 35, name: 'enemy1' });
   // attack({ game, damage: 5, name: 'enemy1' });
   // attack({ game, damage: 35, name: 'enemy2' });

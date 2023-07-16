@@ -9,10 +9,7 @@ const init = (game) => {
   const rectangleStyle = {
     fillStyle: { color: theme.colors.surface.skyBlue, alpha: 0.5 },
   };
-  rectangleGraphics.fillStyle(
-    rectangleStyle.fillStyle.color,
-    rectangleStyle.fillStyle.alpha,
-  );
+  rectangleGraphics.fillStyle(rectangleStyle.fillStyle.color, rectangleStyle.fillStyle.alpha);
   rectangleGraphics.fillRect(0, 0, game.sys.game.config.width, 50);
   game.add
     .text(10, 10, 'name', {

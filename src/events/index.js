@@ -1,12 +1,22 @@
-import { setStateValue } from '../store';
-import { attack } from '../characters/actions';
-import { createCharacter, createHPBar } from '../characters/shared';
 import { fullHeightScreen, fullWidthScreen } from '../utilities/consts';
-let centerCard = null;
-const addEvents = (game, cards, enemies) => {
+
+// eslint-disable-next-line no-unused-vars
+const addEvents = (game, { cards, enemies, hero }) => {
+  let centerCard = null;
+
+  enemies.forEach((enemy) => {
+    enemy.on('pointerdown', () => {
+      console.debug(enemy);
+      if (!centerCard) return;
+    });
+  });
+
+  hero.on('pointerdown', () => {
+    console.debug(hero);
+  });
+
   cards.forEach((card) => {
     const { x, y, z } = { ...card };
-
     game.tweens.add({
       targets: card,
       x,
@@ -49,37 +59,8 @@ const addEvents = (game, cards, enemies) => {
       },
     });
   });
-
-  enemies.forEach((enemy) => {
-    enemy.on('pointerdown', () => {
-      console.debug(enemy);
-      // if (centerCard === card1) {
-      //   const selectedEnemy = enemies.find((enemy) => enemy.isClicked);
-      //   if (selectedEnemy) {
-      //     attack({ game, damage: 5, name: selectedEnemy.name });
-      //     selectedEnemy.isClicked = false;
-      //   }
-      // }
-    });
-  });
 };
 
-const createCard = ({ game, x, name }) =>
-  game.add
-    .image((fullWidthScreen / 10) * x, (fullHeightScreen / 14) * 13, name)
-    .setScale(0.5)
-    .setInteractive();
+export default addEvents;
 
-const init = (game) => {
-  const card1 = createCard({ game, x: 3, name: 'card1' });
-  const card2 = createCard({ game, x: 4, name: 'card2' });
-  const card3 = createCard({ game, x: 5, name: 'card3' });
-  const card4 = createCard({ game, x: 6, name: 'card4' });
-  const card5 = createCard({ game, x: 7, name: 'card5' });
-
-  const cards = [card1, card2, card3, card4, card5];
-
-  addEvents(game, cards, enemies, card1);
-};
-
-export default init;
+// addEvents(game, cards, enemies, card1);
