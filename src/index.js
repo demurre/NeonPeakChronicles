@@ -5,7 +5,7 @@ import initStartScreen from './screens/start';
 import initGameScreen from './screens/game';
 import initMainCharacter from './characters/hero';
 import initEnemies from './characters/enemies';
-import initCards from './cards';
+import initCards from './events';
 import { getStateValue, setStateValue } from './store';
 import { createArmorBar, createHPBar } from './characters/shared';
 
@@ -40,6 +40,12 @@ class MyGame extends Phaser.Scene {
   createCards() {
     initCards(this);
   }
+
+  //createInit() {
+  //  initCards(cards);
+  //  initEnemies(enemies);
+  //  initMainCharacter(MainCharacter);
+  //}
 
   updateHPBar(name) {
     const character = getStateValue(name);

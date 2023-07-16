@@ -1,8 +1,9 @@
+import { setStateValue } from '../store';
+import { attack } from '../characters/actions';
+import { createCharacter, createHPBar } from '../characters/shared';
 import { fullHeightScreen, fullWidthScreen } from '../utilities/consts';
-
-const addEvents = (game, cards) => {
-  let centerCard = null;
-
+let centerCard = null;
+const addEvents = (game, cards, enemies) => {
   cards.forEach((card) => {
     const { x, y, z } = { ...card };
 
@@ -48,6 +49,19 @@ const addEvents = (game, cards) => {
       },
     });
   });
+
+  enemies.forEach((enemy) => {
+    enemy.on('pointerdown', () => {
+      console.debug(enemy);
+      // if (centerCard === card1) {
+      //   const selectedEnemy = enemies.find((enemy) => enemy.isClicked);
+      //   if (selectedEnemy) {
+      //     attack({ game, damage: 5, name: selectedEnemy.name });
+      //     selectedEnemy.isClicked = false;
+      //   }
+      // }
+    });
+  });
 };
 
 const createCard = ({ game, x, name }) =>
@@ -64,7 +78,8 @@ const init = (game) => {
   const card5 = createCard({ game, x: 7, name: 'card5' });
 
   const cards = [card1, card2, card3, card4, card5];
-  addEvents(game, cards);
+
+  addEvents(game, cards, enemies, card1);
 };
 
 export default init;

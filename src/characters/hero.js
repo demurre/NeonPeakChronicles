@@ -1,6 +1,6 @@
 import { setStateValue } from '../store';
 import { createArmorBar, createCharacter, createHPBar } from './shared';
-// import { def, attack } from './actions';
+//import { def, attack } from './actions';
 
 const initMainCharacter = (game) => {
   const baseHP = 40;
@@ -40,8 +40,8 @@ const initMainCharacter = (game) => {
     yOffset: mainCharacter.height,
   });
 
-  // def({ game, armor: 40, name: 'mainCharacter' });
-  // attack({ game, damage: 45, name: 'mainCharacter' });
+  //def({ game, armor: 40, name: 'mainCharacter' });
+  //attack({ game, damage: 45, name: 'mainCharacter' });
   // def({ game, armor: 10, name: 'mainCharacter' });
 };
 
