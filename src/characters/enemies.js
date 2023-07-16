@@ -41,11 +41,10 @@ const init = (game) => {
   };
 
   setStateValue('enemy2', { ...enemyState, bars: enemyBars2, x: 9, xOffset: 45, yOffset: enemy2.height });
-
-  return [enemy1, enemy2];
   // attack({ game, damage: 35, name: 'enemy1' });
   // attack({ game, damage: 5, name: 'enemy1' });
   // attack({ game, damage: 35, name: 'enemy2' });
+  return [enemy1, enemy2];
 };
 
 export default init;

@@ -28,5 +28,24 @@ const init = (game) => {
       align: 'right',
     })
     .setOrigin(0.5, 0);
+    
+const endTurnButton = game.add
+    .text(fullWidthScreen - 10, 10, 'End Turn', {
+      fontFamily: theme.fontFamily.primary,
+      fontSize: theme.size.medium,
+      fill: theme.colors.font.primary,
+      align: 'right',
+    })
+    .setOrigin(1, 0)
+    .setInteractive();
+
+  endTurnButton.on('pointerdown', () => {
+    // Код, що виконується при натисканні кнопки "End Turn"
+    // Нанесення пошкоджень герою ворогом
+    const hero = // Отримання посилання на об'єкт героя
+    const enemy = // Отримання посилання на об'єкт ворога
+    const baseDamage = // Отримання значення базового урону ворога
+    attack({ game, damage: baseDamage, name: hero.texture.key });
+  });
 };
 export default init;

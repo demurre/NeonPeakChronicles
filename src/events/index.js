@@ -1,18 +1,18 @@
 import { fullHeightScreen, fullWidthScreen } from '../utilities/consts';
+import { handleCard1Click, handleCard2Click, handleCard3Click } from './cardActions';
 
-// eslint-disable-next-line no-unused-vars
 const addEvents = (game, { cards, enemies, hero }) => {
   let centerCard = null;
 
   enemies.forEach((enemy) => {
     enemy.on('pointerdown', () => {
-      console.debug(enemy);
-      if (!centerCard) return;
+      handleCard1Click({ game, centerCard, cards, enemy });
     });
   });
 
   hero.on('pointerdown', () => {
-    console.debug(hero);
+    handleCard2Click({ game, centerCard, cards, hero });
+    handleCard3Click({ game, centerCard, cards, hero });
   });
 
   cards.forEach((card) => {
@@ -24,7 +24,7 @@ const addEvents = (game, { cards, enemies, hero }) => {
       z,
       duration: 1000,
       ease: 'Power2',
-      delay: 500,
+      delay: 0,
       onComplete: () => {
         card.on('pointerdown', () => {
           if (centerCard === card) {

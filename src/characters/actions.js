@@ -32,4 +32,16 @@ const def = ({ game, armor, name }) => {
   game.updateArmorBar(name);
 };
 
-export { attack, def };
+const healing = ({ game, heal, name }) => {
+  const character = getStateValue(name);
+  const currentHP = character.currentHP + heal;
+  const baseHP = character.baseHP;
+
+  const newCurrentHP = Math.min(currentHP, baseHP);
+
+  setStateValue(name, { ...character, currentHP: newCurrentHP });
+
+  game.updateHPBar(name);
+};
+
+export { attack, def, healing };
