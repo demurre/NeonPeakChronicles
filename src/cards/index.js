@@ -8,13 +8,21 @@ const createCard = ({ game, x, name, type }) =>
     .setData('type', type);
 
 const initCards = (game) => {
-  const card1 = createCard({ game, x: 3, name: 'card1', type: 'attack' });
-  const card2 = createCard({ game, x: 4, name: 'card2', type: 'def' });
-  const card3 = createCard({ game, x: 5, name: 'card3', type: 'healing' });
-  const card4 = createCard({ game, x: 6, name: 'card4', type: 'poison' });
-  const card5 = createCard({ game, x: 7, name: 'card5', type: 'weak' });
+  const allCards = [
+    { name: 'card1', type: 'attack' },
+    { name: 'card2', type: 'def' },
+    { name: 'card3', type: 'healing' },
+    { name: 'card4', type: 'poison' },
+    { name: 'card5', type: 'weak' },
+  ];
 
-  return [card1, card2, card3, card4, card5];
+  const xOffset = 3;
+
+  const cards = Array.from({ length: 5 }, (_, index) =>
+    createCard({ game, x: xOffset + index, ...allCards[Math.floor(Math.random() * 5)] }),
+  );
+
+  return cards;
 };
 
 export default initCards;

@@ -1,9 +1,7 @@
 import { fullHeightScreen, fullWidthScreen } from '../utilities/consts';
 import { handleCardClick } from './cardActions';
 
-const addEvents = (game, { cards, enemies, hero }) => {
-  let centerCard = null;
-
+const addEvents = (game, { cards, enemies, hero, centerCard }) => {
   enemies.forEach((enemy) => {
     enemy.on('pointerdown', () => {
       if (!centerCard) return;

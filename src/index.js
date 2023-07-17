@@ -29,8 +29,10 @@ class MyGame extends Phaser.Scene {
     const hero = initHero(this);
     const cards = initCards(this);
 
-    addEvents(this, { cards, enemies, hero });
-    createEndTurnButton(this, { cards, enemies, hero });
+    let centerCard = null;
+
+    addEvents(this, { cards, enemies, hero, centerCard });
+    createEndTurnButton(this, { cards, enemies, hero, centerCard });
   }
 
   updateHPBar(name) {

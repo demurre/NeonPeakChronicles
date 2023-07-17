@@ -3,7 +3,8 @@ import { getStateValue } from '../../store';
 import { fullHeightScreen, fullWidthScreen } from '../../utilities/consts';
 import theme from '../../utilities/theme';
 
-const createEndTurnButton = (game, { enemies, hero, cards }) => {
+// eslint-disable-next-line no-unused-vars
+const createEndTurnButton = (game, { enemies, hero, cards, centerCard }) => {
   const endTurnButton = game.add
     .text(fullWidthScreen - 10, fullHeightScreen / 2 - 100, 'End Turn', {
       fontFamily: theme.fontFamily.primary,
@@ -25,6 +26,7 @@ const createEndTurnButton = (game, { enemies, hero, cards }) => {
     cards.forEach((card, index) => {
       card.x = (fullWidthScreen / 10) * (index + 3);
       card.y = (fullHeightScreen / 14) * 13;
+      centerCard = null;
     });
   });
 };
