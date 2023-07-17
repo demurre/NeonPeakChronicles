@@ -9,6 +9,7 @@ import { getStateValue, setStateValue } from './store';
 import { createArmorBar, createHPBar } from './characters/shared';
 import initCards from './cards';
 import addEvents from './events';
+import createEndTurnButton from './components/buttons/endTurnButton';
 
 class MyGame extends Phaser.Scene {
   preload() {
@@ -29,6 +30,7 @@ class MyGame extends Phaser.Scene {
     const cards = initCards(this);
 
     addEvents(this, { cards, enemies, hero });
+    createEndTurnButton(this, { cards, enemies, hero });
   }
 
   updateHPBar(name) {

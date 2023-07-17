@@ -1,18 +1,21 @@
 import { fullHeightScreen, fullWidthScreen } from '../utilities/consts';
-import { handleCard1Click, handleCard2Click, handleCard3Click } from './cardActions';
+import { handleCardClick } from './cardActions';
 
 const addEvents = (game, { cards, enemies, hero }) => {
   let centerCard = null;
 
   enemies.forEach((enemy) => {
     enemy.on('pointerdown', () => {
-      handleCard1Click({ game, centerCard, cards, enemy });
+      if (!centerCard) return;
+      handleCardClick({ game, centerCard, cards, enemy });
+      centerCard = null;
     });
   });
 
   hero.on('pointerdown', () => {
-    handleCard2Click({ game, centerCard, cards, hero });
-    handleCard3Click({ game, centerCard, cards, hero });
+    if (!centerCard) return;
+    handleCardClick({ game, centerCard, cards, hero });
+    centerCard = null;
   });
 
   cards.forEach((card) => {

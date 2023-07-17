@@ -2,10 +2,10 @@ import { setStateValue } from '../store';
 // import { attack } from './actions';
 import { createCharacter, createHPBar } from './shared';
 
-const init = (game) => {
+const initEnemies = (game) => {
   const baseAttack = 5;
-  const baseHP = 40;
-  const currentHP = 40;
+  const baseHP = 20;
+  const currentHP = 20;
 
   const enemyState = {
     baseAttack,
@@ -47,4 +47,4 @@ const init = (game) => {
   return [enemy1, enemy2];
 };
 
-export default init;
+export default initEnemies;

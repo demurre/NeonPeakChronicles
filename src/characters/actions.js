@@ -44,4 +44,23 @@ const healing = ({ game, heal, name }) => {
   game.updateHPBar(name);
 };
 
+// const poison = ({ game, name }) => {
+//   const enemy = getStateValue(name);
+
+//   if (enemy.poisoned) {
+//     const currentHP = enemy.currentHP - 1;
+//     const remainingTurns = enemy.remainingTurns - 1;
+
+//     setStateValue(name, { ...enemy, currentHP, remainingTurns });
+
+//     // Update the enemy's HP bar
+//     game.updateHPBar(name);
+
+//     if (remainingTurns <= 0) {
+//       // Remove the poison effect after the last turn
+//       setStateValue(name, { ...enemy, poisoned: false });
+//     }
+//   }
+// };
+
 export { attack, def, healing };

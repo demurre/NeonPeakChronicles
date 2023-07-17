@@ -1,41 +1,34 @@
 import { attack, def, healing } from '../characters/actions';
+import { fullHeightScreen, fullWidthScreen } from '../utilities/consts';
 
-export const handleCard1Click = ({ game, centerCard, cards, enemy }) => {
-  if (!centerCard) return;
-  if (centerCard === cards[0]) {
+// eslint-disable-next-line no-unused-vars
+export const handleCardClick = ({ game, centerCard, enemy, cards, hero }) => {
+  if (centerCard.getData('type') === 'attack') {
     attack({ game, damage: 5, name: enemy.texture.key });
-  }
-  centerCard = null;
-};
-
-export const handleCard2Click = ({ game, centerCard, cards, hero }) => {
-  if (!centerCard) return;
-  if (centerCard === cards[1]) {
+  } else if (centerCard.getData('type') === 'def') {
     def({ game, armor: 5, name: hero.texture.key });
-  }
-  centerCard = null;
-};
-
-export const handleCard3Click = ({ game, centerCard, cards, hero }) => {
-  if (!centerCard) return;
-  if (centerCard === cards[2]) {
+  } else if (centerCard.getData('type') === 'healing') {
     healing({ game, heal: 5, name: hero.texture.key });
   }
-  centerCard = null;
+
+  const moveCardToCorner = (card) => {
+    card.x = fullWidthScreen - 10;
+    card.y = fullHeightScreen - 10;
+  };
+
+  cards.forEach((card) => {
+    const cardType = card.getData('type');
+    if (cardType === 'attack') {
+      moveCardToCorner(centerCard);
+    } else if (cardType === 'def') {
+      moveCardToCorner(centerCard);
+    } else if (cardType === 'healing') {
+      moveCardToCorner(centerCard);
+    } else if (cardType === 'poison') {
+      moveCardToCorner(centerCard);
+    } else if (cardType === 'weak') {
+      moveCardToCorner(centerCard);
+    }
+    //card.destroy();
+  });
 };
-
-// export const handleCard4Click = ({ game, centerCard, cards, hero }) => {
-//   if (!centerCard) return;
-//   if (centerCard === cards[3]) {
-//     poison({ game, heal: 5, name: hero.texture.key });
-//   }
-//   centerCard = null;
-// };
-
-// export const handleCard5Click = ({ game, centerCard, cards, hero }) => {
-//   if (!centerCard) return;
-//   if (centerCard === cards[4]) {
-//     weak({ game, heal: 5, name: hero.texture.key });
-//   }
-//   centerCard = null;
-// };
