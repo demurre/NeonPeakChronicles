@@ -1,4 +1,5 @@
 import { getStateValue, setStateValue } from '../store';
+import theme from '../utilities/theme';
 
 const makeSafe = (number) => Math.max(0, number);
 
@@ -44,23 +45,22 @@ const healing = ({ game, heal, name }) => {
   game.updateHPBar(name);
 };
 
-// const poison = ({ game, name }) => {
-//   const enemy = getStateValue(name);
+const poison = ({ game, name }) => {
+  const character = getStateValue(name);
+  if (!character.poisoned) {
+    setStateValue(name, { ...character, poisoned: true });
 
-//   if (enemy.poisoned) {
-//     const currentHP = enemy.currentHP - 1;
-//     const remainingTurns = enemy.remainingTurns - 1;
+    const xPoint = character.x;
+    const yPoint = character.y;
 
-//     setStateValue(name, { ...enemy, currentHP, remainingTurns });
+    const poisonCircle = game.add.graphics();
+    const poisonCircleStyle = {
+      fillStyle: { color: theme.colors.surface.green },
+    };
+    poisonCircle.fillStyle(poisonCircleStyle.fillStyle.color);
+    poisonCircle.fillCircle(xPoint, yPoint - 40, 25);
+    game.updateHPBar(name);
+  }
+};
 
-//     // Update the enemy's HP bar
-//     game.updateHPBar(name);
-
-//     if (remainingTurns <= 0) {
-//       // Remove the poison effect after the last turn
-//       setStateValue(name, { ...enemy, poisoned: false });
-//     }
-//   }
-// };
-
-export { attack, def, healing };
+export { attack, def, healing, poison };

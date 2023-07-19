@@ -11,6 +11,7 @@ const imageLoader = (game) => {
   game.load.image('card3', 'src/assets/cards/heal.png');
   game.load.image('card4', 'src/assets/cards/poison.png');
   game.load.image('card5', 'src/assets/cards/weak.png');
+  game.load.image('poisonEffect', 'src/assets/cards/poisonEffect.png');
 };
 
 export default imageLoader;

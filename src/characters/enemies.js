@@ -3,7 +3,7 @@ import { setStateValue } from '../store';
 import { createCharacter, createHPBar } from './shared';
 
 const initEnemies = (game) => {
-  const baseAttack = 5;
+  const baseAttack = 4;
   const baseHP = 20;
   const currentHP = 20;
 

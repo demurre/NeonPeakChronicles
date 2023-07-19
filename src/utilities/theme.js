@@ -5,6 +5,7 @@ const theme = {
       red: '0xDD4B4B',
       lightRed: '0xC17D7D',
       darkBlue: '0x63A3DB',
+      green: '0x46DB84',
     },
     font: {
       primary: '#fff',

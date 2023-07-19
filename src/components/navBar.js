@@ -1,5 +1,6 @@
 import { fullWidthScreen } from '../utilities/consts';
 import theme from '../utilities/theme';
+import { getTurnCount, setTurnCountText, updateTurnCountText } from './gameState';
 
 const createNavBar = (game) => {
   const rectangleGraphics = game.add.graphics();
@@ -16,14 +17,28 @@ const createNavBar = (game) => {
       align: 'left',
     })
     .setOrigin(0, 0);
+
   const currentStage = 1;
   game.add
-    .text(fullWidthScreen - 75, 10, `Stage ${currentStage}`, {
+    .text(fullWidthScreen - 200, 10, `Stage: ${currentStage}`, {
       fontFamily: theme.fontFamily.primary,
       fontSize: theme.size.medium,
       fill: theme.colors.font.primary,
       align: 'right',
     })
     .setOrigin(0.5, 0);
+
+  const turnCountText = game.add
+    .text(fullWidthScreen - 75, 10, `Turn: ${getTurnCount()}`, {
+      fontFamily: theme.fontFamily.primary,
+      fontSize: theme.size.medium,
+      fill: theme.colors.font.primary,
+      align: 'right',
+    })
+    .setOrigin(0.5, 0);
+
+  setTurnCountText(turnCountText);
+
+  updateTurnCountText();
 };
 export default createNavBar;
