@@ -1,4 +1,5 @@
 import { setStateValue } from '../store';
+import { shuffleArray } from '../utilities/helpers';
 import { createCharacter, createHPBar } from './shared';
 
 const initEnemies = (game) => {
@@ -12,43 +13,32 @@ const initEnemies = (game) => {
     currentHP,
   };
 
-  const allEnemies = [{ name: 'enemy1' }, { name: 'enemy2' }, { name: 'enemy3' }];
-  const xOffset = 7;
+  const allEnemies = shuffleArray([{ name: 'enemy1' }, { name: 'enemy2' }, { name: 'enemy3' }]);
 
-  const enemies = Array.from({ length: 3 }, (_, index) =>
-    createCharacter({ game, x: xOffset + index, ...allEnemies[Math.floor(Math.random() * 5)] }),
-  );
+  return Array.from({ length: 2 }).map((_, i) => {
+    const enemy = createCharacter({ game, x: i * 2 + 7, name: allEnemies[i].name, isClicked: true });
 
-  // const enemy1 = createCharacter({ game, x: 7, name: 'enemy1', isClicked: true });
+    const enemyBars = {
+      ...createHPBar({
+        game,
+        x: i * 2 + 7,
+        yOffset: enemy.height,
+        xOffset: 45,
+        HP: currentHP,
+        baseHP: baseHP,
+      }),
+    };
 
-  // const enemyBars1 = {
-  //   ...createHPBar({
-  //     game,
-  //     x: 7,
-  //     yOffset: enemy1.height,
-  //     xOffset: 45,
-  //     HP: currentHP,
-  //     baseHP: baseHP,
-  //   }),
-  // };
+    setStateValue(allEnemies[i].name, {
+      ...enemyState,
+      bars: enemyBars,
+      x: i * 2 + 7,
+      xOffset: 45,
+      yOffset: enemy.height,
+    });
 
-  // setStateValue('enemy1', { ...enemyState, bars: enemyBars1, x: 7, xOffset: 45, yOffset: enemy1.height });
-
-  // const enemy2 = createCharacter({ game, x: 9, name: 'enemy2', isClicked: true });
-  // const enemyBars2 = {
-  //   ...createHPBar({
-  //     game,
-  //     x: 9,
-  //     yOffset: enemy2.height,
-  //     xOffset: 45,
-  //     HP: currentHP,
-  //     baseHP: baseHP,
-  //   }),
-  // };
-
-  // setStateValue('enemy2', { ...enemyState, bars: enemyBars2, x: 9, xOffset: 45, yOffset: enemy2.height });
-
-  return [enemies];
+    return enemy;
+  });
 };
 
 export default initEnemies;
