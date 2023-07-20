@@ -3,11 +3,13 @@ import { shuffleArray } from '../utilities/helpers';
 import { createCharacter, createHPBar } from './shared';
 
 const initEnemies = (game) => {
+  const attack = 4;
   const baseAttack = 4;
   const baseHP = 20;
   const currentHP = 20;
 
   const enemyState = {
+    attack,
     baseAttack,
     baseHP,
     currentHP,
@@ -35,6 +37,7 @@ const initEnemies = (game) => {
       x: i * 2 + 7,
       xOffset: 45,
       yOffset: enemy.height,
+      effects: {},
     });
 
     return enemy;

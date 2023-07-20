@@ -10,6 +10,7 @@ import { createArmorBar, createHPBar } from './characters/shared';
 import initCards from './cards';
 import addEvents from './events';
 import createEndTurnButton from './components/buttons/endTurnButton';
+import { attack, decrementAttack, resetAttack } from './characters/actions';
 
 class MyGame extends Phaser.Scene {
   preload() {
@@ -86,6 +87,25 @@ class MyGame extends Phaser.Scene {
         ...bars,
         ...newArmorBar,
       },
+    });
+  }
+
+  updateEffects() {
+    const currentTurn = getStateValue('turnCount');
+    const state = getStateValue();
+    const enemiesKeys = Object.keys(state).filter((name) => name.includes('enemy'));
+    enemiesKeys.forEach((key) => {
+      const enemy = getStateValue(key);
+      if (enemy.effects.poison) {
+        const endTurn = enemy.effects.poison.endTurn;
+        if (currentTurn <= endTurn) attack({ game: this, damage: 1, name: key });
+      }
+      if (enemy.effects.weak) {
+        const endTurn = enemy.effects.weak.endTurn;
+        if (currentTurn < endTurn) decrementAttack({ divider: 2, name: key });
+
+        if (currentTurn === endTurn) resetAttack({ name: key });
+      }
     });
   }
 }

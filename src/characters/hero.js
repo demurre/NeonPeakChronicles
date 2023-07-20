@@ -38,6 +38,7 @@ const initHero = (game) => {
     x: 2,
     xOffset: 0,
     yOffset: hero.height,
+    effects: {},
   });
   game.updateArmorBar('hero');
   //def({ game, armor: 40, name: 'hero' });

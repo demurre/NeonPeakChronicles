@@ -1,5 +1,5 @@
+import { getTurnCount } from '../components/gameState';
 import { getStateValue, setStateValue } from '../store';
-import theme from '../utilities/theme';
 
 const makeSafe = (number) => Math.max(0, number);
 
@@ -24,6 +24,18 @@ const attack = ({ game, damage, name }) => {
   }
 };
 
+const decrementAttack = ({ name, divider }) => {
+  const character = getStateValue(name);
+  const baseAttack = character.baseAttack;
+  setStateValue(name, { ...character, attack: baseAttack / divider });
+};
+
+const resetAttack = ({ name }) => {
+  const character = getStateValue(name);
+  const baseAttack = character.baseAttack;
+  setStateValue(name, { ...character, attack: baseAttack });
+};
+
 const def = ({ game, armor, name }) => {
   const character = getStateValue(name);
   const currentArmor = character.currentArmor + armor;
@@ -45,22 +57,22 @@ const healing = ({ game, heal, name }) => {
   game.updateHPBar(name);
 };
 
-const poison = ({ game, name }) => {
+const applyPoison = ({ duration, name }) => {
+  const turnCount = getTurnCount();
   const character = getStateValue(name);
-  if (!character.poisoned) {
-    setStateValue(name, { ...character, poisoned: true });
-
-    const xPoint = character.x;
-    const yPoint = character.y;
-
-    const poisonCircle = game.add.graphics();
-    const poisonCircleStyle = {
-      fillStyle: { color: theme.colors.surface.green },
-    };
-    poisonCircle.fillStyle(poisonCircleStyle.fillStyle.color);
-    poisonCircle.fillCircle(xPoint, yPoint - 40, 25);
-    game.updateHPBar(name);
-  }
+  setStateValue(name, {
+    ...character,
+    effects: { ...character.effects, poison: { endTurn: turnCount + duration } },
+  });
 };
 
-export { attack, def, healing, poison };
+const applyWeak = ({ duration, name }) => {
+  const turnCount = getTurnCount();
+  const character = getStateValue(name);
+  setStateValue(name, {
+    ...character,
+    effects: { ...character.effects, weak: { endTurn: turnCount + duration } },
+  });
+};
+
+export { attack, def, healing, applyPoison, applyWeak, decrementAttack, resetAttack };

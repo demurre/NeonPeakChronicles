@@ -5,14 +5,14 @@ const addEvents = (game, { cards, enemies, hero, centerCard }) => {
   enemies.forEach((enemy) => {
     enemy.on('pointerdown', () => {
       if (!centerCard) return;
-      handleCardClick({ game, centerCard, cards, enemy });
+      handleCardClick({ game, centerCard, enemy });
       centerCard = null;
     });
   });
 
   hero.on('pointerdown', () => {
     if (!centerCard) return;
-    handleCardClick({ game, centerCard, cards, hero });
+    handleCardClick({ game, centerCard, hero });
     centerCard = null;
   });
 

@@ -1,4 +1,4 @@
-import { attack, poison } from '../../characters/actions';
+import { attack } from '../../characters/actions';
 import { getStateValue } from '../../store';
 import { fullHeightScreen, fullWidthScreen } from '../../utilities/consts';
 import theme from '../../utilities/theme';
@@ -17,13 +17,11 @@ const createEndTurnButton = (game, { enemies, hero, cards, centerCard }) => {
 
   endTurnButton.on('pointerdown', () => {
     if (!hero || enemies.length === 0) return;
+    game.updateEffects();
 
     enemies.forEach((enemy) => {
-      const baseAttack = getStateValue(enemy.texture.key).baseAttack;
-      attack({ game, damage: baseAttack, name: hero.texture.key });
-      if (getStateValue(enemy.texture.key).poisoned) {
-        poison({ game, damage: 1, name: enemy.texture.key });
-      }
+      const enemyAttack = getStateValue(enemy.texture.key).attack;
+      attack({ game, damage: enemyAttack, name: hero.texture.key });
     });
 
     cards.forEach((card, index) => {
