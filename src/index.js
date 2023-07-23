@@ -108,6 +108,16 @@ class MyGame extends Phaser.Scene {
       }
     });
   }
+
+  removeCardFromHand(card) {
+    const id = card.getData('id');
+    const hand = getStateValue('hand');
+    setStateValue(
+      'hand',
+      hand.filter((card) => card.getData('id') !== id),
+    );
+    card.destroy();
+  }
 }
 
 const config = {

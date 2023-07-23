@@ -1,3 +1,4 @@
+import { updateCardsByHand } from '../../cards';
 import { attack } from '../../characters/actions';
 import { getStateValue } from '../../store';
 import { fullHeightScreen, fullWidthScreen } from '../../utilities/consts';
@@ -23,13 +24,13 @@ const createEndTurnButton = (game, { enemies, hero, cards, centerCard }) => {
       const enemyAttack = getStateValue(enemy.texture.key).attack;
       attack({ game, damage: enemyAttack, name: hero.texture.key });
     });
+    updateCardsByHand(game);
 
     cards.forEach((card, index) => {
       card.x = (fullWidthScreen / 10) * (index + 3);
       card.y = (fullHeightScreen / 14) * 13;
       centerCard = null;
     });
-
     incrementTurnCount();
     updateTurnCountText(game);
   });

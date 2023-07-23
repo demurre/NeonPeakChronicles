@@ -1,5 +1,4 @@
 import { applyPoison, applyWeak, attack, def, healing } from '../characters/actions';
-//import { fullHeightScreen, fullWidthScreen } from '../utilities/consts';
 
 export const handleCardClick = ({ game, centerCard, enemy, hero }) => {
   const cardType = centerCard.getData('type');
@@ -23,5 +22,5 @@ export const handleCardClick = ({ game, centerCard, enemy, hero }) => {
       break;
   }
 
-  centerCard.destroy();
+  game.removeCardFromHand(centerCard);
 };

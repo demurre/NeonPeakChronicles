@@ -15,7 +15,6 @@ const addEvents = (game, { cards, enemies, hero, centerCard }) => {
     handleCardClick({ game, centerCard, hero });
     centerCard = null;
   });
-
   cards.forEach((card) => {
     const { x, y, z } = { ...card };
     game.tweens.add({

@@ -17,13 +17,13 @@ const initEnemies = (game) => {
 
   const allEnemies = shuffleArray([{ name: 'enemy1' }, { name: 'enemy2' }, { name: 'enemy3' }]);
 
-  return Array.from({ length: 2 }).map((_, i) => {
-    const enemy = createCharacter({ game, x: i * 2 + 7, name: allEnemies[i].name, isClicked: true });
+  return Array.from({ length: 2 }).map((_, index) => {
+    const enemy = createCharacter({ game, x: index * 2 + 7, name: allEnemies[index].name, isClicked: true });
 
     const enemyBars = {
       ...createHPBar({
         game,
-        x: i * 2 + 7,
+        x: index * 2 + 7,
         yOffset: enemy.height,
         xOffset: 45,
         HP: currentHP,
@@ -31,13 +31,14 @@ const initEnemies = (game) => {
       }),
     };
 
-    setStateValue(allEnemies[i].name, {
+    setStateValue(allEnemies[index].name, {
       ...enemyState,
       bars: enemyBars,
-      x: i * 2 + 7,
+      x: index * 2 + 7,
       xOffset: 45,
       yOffset: enemy.height,
       effects: {},
+      enemy,
     });
 
     return enemy;
