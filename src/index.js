@@ -1,118 +1,125 @@
-/* eslint-disable no-unused-vars */
 import Phaser from 'phaser';
 import imageLoader from './loaders/images';
 import { fullHeightScreen, fullWidthScreen } from './utilities/consts';
 import initStartScreen from './screens/start';
 import initGameScreen from './screens/game';
-import initMainCharacter from './characters/hero';
+import initHero from './characters/hero';
 import initEnemies from './characters/enemies';
+import { getStateValue, setStateValue } from './store';
+import { createArmorBar, createHPBar } from './characters/shared';
 import initCards from './cards';
+import addEvents from './events';
+import createEndTurnButton from './components/buttons/endTurnButton';
+import { attack, decrementAttack, resetAttack } from './characters/actions';
 
 class MyGame extends Phaser.Scene {
   preload() {
     imageLoader(this);
   }
-
   create() {
     initStartScreen(this);
   }
 
   startGame() {
-    this.createBackground();
-    this.createMainCharacter();
-    this.createEnemies();
-    this.createCards();
+    this.init();
   }
 
-  createBackground() {
+  init() {
     initGameScreen(this);
+    const enemies = initEnemies(this);
+    const hero = initHero(this);
+    const cards = initCards(this);
+
+    let centerCard = null;
+
+    addEvents(this, { cards, enemies, hero, centerCard });
+    createEndTurnButton(this, { cards, enemies, hero, centerCard });
   }
 
-  createMainCharacter() {
-    initMainCharacter(this);
+  updateHPBar(name) {
+    const character = getStateValue(name);
+    const { currentHP, baseHP, x, xOffset, yOffset, bars } = character;
+    const { HPBar, HPText, HPBarBg } = bars;
+
+    HPBar.destroy();
+    HPText.destroy();
+    HPBarBg.destroy();
+
+    setStateValue(name, {
+      ...character,
+      bars: {
+        ...bars,
+        ...createHPBar({
+          game: this,
+          x,
+          yOffset,
+          xOffset,
+          HP: currentHP,
+          baseHP: baseHP,
+        }),
+      },
+    });
   }
 
-  createEnemies() {
-    initEnemies(this);
-  }
+  updateArmorBar(name) {
+    const character = getStateValue(name);
+    const { currentArmor, x, xOffset, yOffset, bars } = character;
+    const { armorBar, armorText } = bars;
 
-  createCards() {
-    initCards(this);
-  }
-
-  attackEnemy(card, damage) {
-    // Отримання посилання на enemy, на якого було натиснуто картку
-    const enemy = // Отримати enemy
-      // Застосування шкоди до enemy
-      (enemy.currentHP -= damage);
-
-    // Оновлення HP-бара enemy
-    this.updateHPBar(enemy.hpBar, enemy.currentHP, enemy.baseHP);
-
-    // Перевірка, чи enemy був убитий
-    if (enemy.currentHP <= 0) {
-      // enemy був убитий, виконати відповідні дії
+    if (armorBar && armorText) {
+      armorBar.destroy();
+      armorText.destroy();
     }
+
+    const newArmorBar = currentArmor
+      ? createArmorBar({
+          game: this,
+          x,
+          yOffset,
+          xOffset,
+          armor: currentArmor,
+        })
+      : { armorBar: null, armorText: null };
+
+    setStateValue(name, {
+      ...character,
+      bars: {
+        ...bars,
+        ...newArmorBar,
+      },
+    });
   }
 
-  addArmorToMainCharacter(card, armor) {
-    // Отримання головного персонажа
-    const mainCharacter = // Отримати головного персонажа
-      // Додавання броні головному персонажу
-      // Додати броню до головного персонажа
+  updateEffects() {
+    const currentTurn = getStateValue('turnCount');
+    const state = getStateValue();
+    const enemiesKeys = Object.keys(state).filter((name) => name.includes('enemy'));
+    enemiesKeys.forEach((key) => {
+      const enemy = getStateValue(key);
+      if (enemy.effects.poison) {
+        const endTurn = enemy.effects.poison.endTurn;
+        if (currentTurn <= endTurn) attack({ game: this, damage: 1, name: key });
+      }
+      if (enemy.effects.weak) {
+        const endTurn = enemy.effects.weak.endTurn;
+        if (currentTurn < endTurn) decrementAttack({ divider: 2, name: key });
 
-      // Оновлення HP-бара головного персонажа
-      this.updateHPBar(
-        mainCharacter.hpBar,
-        mainCharacter.currentHP,
-        mainCharacter.baseHP,
-      );
+        if (currentTurn === endTurn) resetAttack({ name: key });
+      }
+    });
   }
 
-  restoreHPToMainCharacter(card) {
-    // Отримання головного персонажа
-    const mainCharacter = // Отримати головного персонажа
-      // Відновлення HP головного персонажа
-      (mainCharacter.currentHP = mainCharacter.baseHP);
-
-    // Оновлення HP-бара головного персонажа
-    this.updateHPBar(
-      mainCharacter.hpBar,
-      mainCharacter.currentHP,
-      mainCharacter.baseHP,
+  removeCardFromHand(card) {
+    const id = card.getData('id');
+    const hand = getStateValue('hand');
+    setStateValue(
+      'hand',
+      hand.filter((card) => card.getData('id') !== id),
     );
-  }
-
-  applyPoisonEffect(card) {
-    // Отримання enemy, на якого було натиснуто картку
-    const enemy = // Отримати enemy
-      // Застосування ефекту отрути до enemy
-      // Застосувати ефект отрути до enemy
-
-      // Відображення зеленого кола на enemy
-      this.showEffectCircle(enemy, 'green');
-  }
-
-  applyWeakEffect(card) {
-    // Отримання enemy, на якого було натиснуто картку
-    const enemy = // Отримати enemy
-      // Застосування ефекту слабкості до enemy
-      // Застосувати ефект слабкості до enemy
-
-      // Відображення сірого кола на enemy
-      this.showEffectCircle(enemy, 'gray');
-  }
-
-  updateHPBar(hpBar, currentHP, baseHP) {
-    const scaleFactor = currentHP / baseHP; // Розрахунок масштабного коефіцієнта HP-бара
-    hpBar.setScale(scaleFactor, 1); // Оновлення масштабу HP-бара
-  }
-
-  showEffectCircle(target, color) {
-    this.add.circle(target.x, target.y, target.displayWidth / 2, color, 0.5); // Створення круга з відповідним кольором
-    // Додаткові дії з ефектом кола (наприклад, анімація)
+    card.destroy();
   }
 }
+
 const config = {
   type: Phaser.AUTO,
   parent: 'game',

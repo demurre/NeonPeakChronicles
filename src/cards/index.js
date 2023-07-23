@@ -1,85 +1,72 @@
+import { getStateValue, setStateValue } from '../store';
+import { v4 as uuidv4 } from 'uuid';
 import { fullHeightScreen, fullWidthScreen } from '../utilities/consts';
-const addEvents = (game, cards) => {
-  let centerCard = null; // Змінна для зберігання посилання на картку в центрі
-  cards.forEach((card) => {
-    const { x, y, z } = { ...card };
-    game.tweens.add({
-      targets: card,
-      x,
-      y,
-      z,
-      duration: 1000,
-      ease: 'Power2',
-      delay: 500,
-      onComplete: () => {
-        card.on('pointerdown', () => {
-          if (centerCard === card) {
-            // Картка вже в центрі, повернення на початкові координати
-            game.tweens.add({
-              targets: card,
-              x,
-              y,
-              z,
-              duration: 500,
-              ease: 'Power2',
-            });
-            centerCard = null; // Встановлюємо центральну картку в значення null
-          } else if (centerCard === null) {
-            // Переміщення картки в центр, якщо немає жодної картки в центрі
-            const centerX = fullWidthScreen / 2;
-            const centerY = fullHeightScreen / 2;
-            const cardWidth = card.displayWidth * card.scaleX;
-            const cardHeight = card.displayHeight * card.scaleY;
-            const targetX = centerX - cardWidth / 2;
-            const targetY = centerY - cardHeight / 2;
+import addEvents from '../events';
 
-            game.tweens.add({
-              targets: card,
-              x: targetX,
-              y: targetY,
-              z: 100,
-              duration: 500,
-              ease: 'Power2',
-            });
-            centerCard = card; // Зберігаємо посилання на центральну картку
-          }
-
-          // Виконання відповідних дій для кожної карти
-          switch (card) {
-            case card1:
-              game.attackEnemy(card, 5);
-              break;
-            case card2:
-              game.addArmorToMainCharacter(card, 5);
-              break;
-            case card3:
-              game.restoreHPToMainCharacter(card);
-              break;
-            case card4:
-              game.applyPoisonEffect(card);
-              break;
-            case card5:
-              game.applyWeakEffect(card);
-              break;
-          }
-        });
-      },
-    });
-  });
-};
-const createCard = ({ game, x, name } = props) =>
-  game.add
+const createCard = ({ game, x, name, type }) => {
+  const cardId = uuidv4();
+  const card = game.add
     .image((fullWidthScreen / 10) * x, (fullHeightScreen / 14) * 13, name)
     .setScale(0.5)
-    .setInteractive();
-const init = (game) => {
-  const card1 = createCard({ game, x: 3, name: 'card1' });
-  const card2 = createCard({ game, x: 4, name: 'card2' });
-  const card3 = createCard({ game, x: 5, name: 'card3' });
-  const card4 = createCard({ game, x: 6, name: 'card4' });
-  const card5 = createCard({ game, x: 7, name: 'card5' });
+    .setInteractive()
+    .setData('type', type)
+    .setData('id', cardId)
+    .setData('name', name);
 
-  const cards = [card1, card2, card3, card4, card5];
-  addEvents(game, cards);
+  return card;
 };
-export default init;
+
+const allCards = [
+  { name: 'card1', type: 'attack' },
+  { name: 'card2', type: 'def' },
+  { name: 'card3', type: 'healing' },
+  { name: 'card4', type: 'poison' },
+  { name: 'card5', type: 'weak' },
+];
+
+const xOffset = 3;
+
+const initCards = (game) => {
+  const cards = Array.from({ length: 5 }, (_, index) =>
+    createCard({ game, x: xOffset + index, ...allCards[Math.floor(Math.random() * 5)] }),
+  );
+
+  setStateValue('hand', cards);
+
+  return cards;
+};
+
+export const updateCardsByHand = (game) => {
+  const hand = getStateValue('hand');
+  const cards = hand.map((card) => ({
+    name: card.getData('name'),
+    type: card.getData('type'),
+  }));
+
+  while (cards.length < 5) cards.push(allCards[Math.floor(Math.random() * 5)]);
+
+  hand.forEach((card) => card.destroy());
+
+  const newCards = cards.map((card, index) => createCard({ game, x: xOffset + index, ...card }));
+
+  setStateValue('hand', newCards);
+
+  const state = getStateValue();
+
+  const enemies = getEnemiesByState_(state);
+  const hero = getHeroByState_(state);
+
+  addEvents(game, { cards: newCards, enemies, hero, centerCard: null });
+};
+
+const getEnemiesByState_ = (state) =>
+  Object.entries(state)
+    .filter(([name]) => name.includes('enemy'))
+    .map(([, value]) => value.enemy);
+
+const getHeroByState_ = (state) =>
+  Object.entries(state)
+    .filter(([name]) => name.includes('hero'))
+    .flat()[1].hero;
+
+export default initCards;

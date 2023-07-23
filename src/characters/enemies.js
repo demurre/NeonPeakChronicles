@@ -1,30 +1,48 @@
+import { setStateValue } from '../store';
+import { shuffleArray } from '../utilities/helpers';
 import { createCharacter, createHPBar } from './shared';
 
-const init = (game) => {
-  const enemy1 = createCharacter({ game, x: 7, name: 'enemy1' });
-  enemy1.baseAttack = 5;
-  enemy1.baseHP = 40;
-  enemy1.currentHP = enemy1.baseHP;
-  enemy1.hpBar = enemy1HPBar;
-  const enemy1HPBar = createHPBar({
-    game,
-    x: 7,
-    name: 'hpbar40',
-    yOffset: enemy1.height,
-    xOffset: 0,
-  });
+const initEnemies = (game) => {
+  const attack = 4;
+  const baseAttack = 4;
+  const baseHP = 20;
+  const currentHP = 20;
 
-  const enemy2 = createCharacter({ game, x: 9, name: 'enemy2' });
-  enemy2.baseAttack = 5;
-  enemy2.baseHP = 40;
-  enemy2.currentHP = enemy2.baseHP;
-  enemy2.hpBar = enemy2HPBar;
-  const enemy2HPBar = createHPBar({
-    game,
-    x: 9,
-    name: 'hpbar40',
-    yOffset: enemy2.height,
-    xOffset: 0,
+  const enemyState = {
+    attack,
+    baseAttack,
+    baseHP,
+    currentHP,
+  };
+
+  const allEnemies = shuffleArray([{ name: 'enemy1' }, { name: 'enemy2' }, { name: 'enemy3' }]);
+
+  return Array.from({ length: 2 }).map((_, index) => {
+    const enemy = createCharacter({ game, x: index * 2 + 7, name: allEnemies[index].name, isClicked: true });
+
+    const enemyBars = {
+      ...createHPBar({
+        game,
+        x: index * 2 + 7,
+        yOffset: enemy.height,
+        xOffset: 45,
+        HP: currentHP,
+        baseHP: baseHP,
+      }),
+    };
+
+    setStateValue(allEnemies[index].name, {
+      ...enemyState,
+      bars: enemyBars,
+      x: index * 2 + 7,
+      xOffset: 45,
+      yOffset: enemy.height,
+      effects: {},
+      enemy,
+    });
+
+    return enemy;
   });
 };
-export default init;
+
+export default initEnemies;
