@@ -1,4 +1,4 @@
-import { getTurnCount } from '../components/gameState';
+import { getTurnCount } from '../components/turnCount';
 import { getStateValue, setStateValue } from '../store';
 
 const makeSafe = (number) => Math.max(0, number);

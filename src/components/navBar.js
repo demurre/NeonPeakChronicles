@@ -1,6 +1,6 @@
 import { fullWidthScreen } from '../utilities/consts';
 import theme from '../utilities/theme';
-import { getTurnCount, setTurnCountText, updateTurnCountText } from './gameState';
+import { getTurnCount, setTurnCountText, updateTurnCountText } from './turnCount';
 
 const createNavBar = (game) => {
   const rectangleGraphics = game.add.graphics();

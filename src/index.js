@@ -11,11 +11,17 @@ import initCards from './cards';
 import addEvents from './events';
 import createEndTurnButton from './components/buttons/endTurnButton';
 import { attack, decrementAttack, resetAttack } from './characters/actions';
+import initFinalScreen from './screens/final';
 
 class MyGame extends Phaser.Scene {
   preload() {
     imageLoader(this);
   }
+
+  finalScreen() {
+    initFinalScreen(this);
+  }
+
   create() {
     initStartScreen(this);
   }

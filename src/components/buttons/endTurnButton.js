@@ -1,9 +1,10 @@
 import { updateCardsByHand } from '../../cards';
 import { attack } from '../../characters/actions';
+import checkDeath from '../../events/checkDeath';
 import { getStateValue } from '../../store';
 import { fullHeightScreen, fullWidthScreen } from '../../utilities/consts';
 import theme from '../../utilities/theme';
-import { incrementTurnCount, updateTurnCountText } from '../gameState';
+import { incrementTurnCount, updateTurnCountText } from '../turnCount';
 // eslint-disable-next-line no-unused-vars
 const createEndTurnButton = (game, { enemies, hero, cards, centerCard }) => {
   const endTurnButton = game.add
@@ -24,6 +25,7 @@ const createEndTurnButton = (game, { enemies, hero, cards, centerCard }) => {
       const enemyAttack = getStateValue(enemy.texture.key).attack;
       attack({ game, damage: enemyAttack, name: hero.texture.key });
     });
+
     updateCardsByHand(game);
 
     cards.forEach((card, index) => {
@@ -31,8 +33,10 @@ const createEndTurnButton = (game, { enemies, hero, cards, centerCard }) => {
       card.y = (fullHeightScreen / 14) * 13;
       centerCard = null;
     });
+
     incrementTurnCount();
     updateTurnCountText(game);
+    checkDeath(game, hero);
   });
 };
 export default createEndTurnButton;
