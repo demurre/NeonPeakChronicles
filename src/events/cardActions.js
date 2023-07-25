@@ -5,7 +5,7 @@ export const handleCardClick = ({ game, centerCard, target, targetType = 'enemy'
   if (targetType === 'enemy') {
     switch (cardType) {
       case 'attack':
-        attack({ game, damage: 40, name: target.texture.key });
+        attack({ game, damage: 5, name: target.texture.key });
         break;
       case 'poison':
         applyPoison({ name: target.texture.key, duration: 5 });
