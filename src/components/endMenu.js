@@ -1,6 +1,7 @@
 import { setStateValue } from '../store';
 import { fullHeightScreen, fullWidthScreen } from '../utilities/consts';
 import theme from '../utilities/theme';
+import { updateStageCountText } from './stageCount';
 import { updateTurnCountText } from './turnCount';
 
 const createEndMenu = (game) => {
@@ -14,9 +15,11 @@ const createEndMenu = (game) => {
 
   leaveButton.setInteractive();
   leaveButton.on('pointerdown', () => {
-    game.create();
-    setStateValue('turnCount', 0);
+    setStateValue('turnCount', 1);
     updateTurnCountText(game);
+    setStateValue('stageCount', 1);
+    updateStageCountText(game);
+    game.create();
   });
 
   const retryButton = game.add
@@ -29,9 +32,11 @@ const createEndMenu = (game) => {
 
   retryButton.setInteractive();
   retryButton.on('pointerdown', () => {
-    game.startGame();
-    setStateValue('turnCount', 0);
+    setStateValue('turnCount', 1);
     updateTurnCountText(game);
+    setStateValue('stageCount', 1);
+    updateStageCountText(game);
+    game.startGame();
   });
 };
 

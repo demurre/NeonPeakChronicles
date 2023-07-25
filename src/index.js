@@ -4,7 +4,7 @@ import { fullHeightScreen, fullWidthScreen } from './utilities/consts';
 import initStartScreen from './screens/start';
 import initGameScreen from './screens/game';
 import initHero from './characters/hero';
-import initEnemies from './characters/enemies';
+import initEnemies, { destroyEnemies } from './characters/enemies';
 import { getStateValue, setStateValue } from './store';
 import { createArmorBar, createHPBar } from './characters/shared';
 import initCards from './cards';
@@ -12,6 +12,8 @@ import addEvents from './events';
 import createEndTurnButton from './components/buttons/endTurnButton';
 import { attack, decrementAttack, resetAttack } from './characters/actions';
 import initFinalScreen from './screens/final';
+import initFinalBoss from './characters/finalBoss';
+import { getEnemiesKeys } from './utilities/helpers';
 
 class MyGame extends Phaser.Scene {
   preload() {
@@ -32,13 +34,19 @@ class MyGame extends Phaser.Scene {
 
   init() {
     initGameScreen(this);
+    let boss;
     const enemies = initEnemies(this);
     const hero = initHero(this);
+
+    if (getStateValue('stageCount') === 4) {
+      boss = initFinalBoss(this);
+      destroyEnemies();
+    }
     const cards = initCards(this);
 
     let centerCard = null;
 
-    addEvents(this, { cards, enemies, hero, centerCard });
+    addEvents(this, { cards, enemies, hero, centerCard, boss });
     createEndTurnButton(this, { cards, enemies, hero, centerCard });
   }
 
@@ -98,8 +106,7 @@ class MyGame extends Phaser.Scene {
 
   updateEffects() {
     const currentTurn = getStateValue('turnCount');
-    const state = getStateValue();
-    const enemiesKeys = Object.keys(state).filter((name) => name.includes('enemy'));
+    const enemiesKeys = getEnemiesKeys();
     enemiesKeys.forEach((key) => {
       const enemy = getStateValue(key);
       if (enemy.effects.poison) {

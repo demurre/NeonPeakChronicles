@@ -5,6 +5,7 @@ import { getStateValue } from '../../store';
 import { fullHeightScreen, fullWidthScreen } from '../../utilities/consts';
 import theme from '../../utilities/theme';
 import { incrementTurnCount, updateTurnCountText } from '../turnCount';
+
 // eslint-disable-next-line no-unused-vars
 const createEndTurnButton = (game, { enemies, hero, cards, centerCard }) => {
   const endTurnButton = game.add
@@ -36,7 +37,7 @@ const createEndTurnButton = (game, { enemies, hero, cards, centerCard }) => {
 
     incrementTurnCount();
     updateTurnCountText(game);
-    checkDeath(game, hero);
+    checkDeath(game, hero, enemies);
   });
 };
 export default createEndTurnButton;

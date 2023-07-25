@@ -6,7 +6,7 @@ const imageLoader = (game) => {
   game.load.image('enemy1', 'src/assets/enemies/enemy1.png');
   game.load.image('enemy2', 'src/assets/enemies/enemy2.png');
   game.load.image('enemy3', 'src/assets/enemies/enemy3.png');
-  game.load.image('boss', 'src/assets/finalBoss.png');
+  game.load.image('finalBoss', 'src/assets/enemies/finalBoss.png');
   game.load.image('card1', 'src/assets/cards/dmg.png');
   game.load.image('card2', 'src/assets/cards/armor.png');
   game.load.image('card3', 'src/assets/cards/heal.png');
