@@ -3,7 +3,7 @@ import theme from '../utilities/theme';
 
 const createStartMenu = (game) => {
   game.add
-    .text(fullWidthScreen / 2, (fullHeightScreen - 100) / 2, 'name', {
+    .text(fullWidthScreen / 2, (fullHeightScreen - 100) / 2, 'Neon Peak Chronicles', {
       fontFamily: theme.fontFamily.primary,
       fontSize: theme.size.large,
       fill: theme.colors.font.primary,

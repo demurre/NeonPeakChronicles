@@ -1,6 +1,5 @@
 import { setStateValue } from '../store';
 import { createArmorBar, createCharacter, createHPBar } from './shared';
-// import { def, attack, healing } from './actions';
 
 const initHero = (game) => {
   const baseHP = 40;
@@ -42,10 +41,6 @@ const initHero = (game) => {
     hero,
   });
   game.updateArmorBar('hero');
-  //def({ game, armor: 40, name: 'hero' });
-  // attack({ game, damage: 20, name: 'hero' });
-  // healing({ game, heal: 10, name: 'hero' });
-  // def({ game, armor: 10, name: 'hero' });
   return hero;
 };
 

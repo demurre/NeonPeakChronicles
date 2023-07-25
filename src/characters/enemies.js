@@ -1,5 +1,5 @@
-import { setStateValue } from '../store';
-import { shuffleArray } from '../utilities/helpers';
+import { getStateValue, setStateValue } from '../store';
+import { getEnemiesKeys, shuffleArray } from '../utilities/helpers';
 import { createCharacter, createHPBar } from './shared';
 
 const initEnemies = (game) => {
@@ -44,5 +44,17 @@ const initEnemies = (game) => {
     return enemy;
   });
 };
-
+export const destroyEnemies = () => {
+  const enemiesKeys = getEnemiesKeys();
+  enemiesKeys.forEach((key) => {
+    const {
+      enemy,
+      bars: { HPBar, HPText, HPBarBg },
+    } = getStateValue(key);
+    enemy.destroy();
+    HPBar.destroy();
+    HPText.destroy();
+    HPBarBg.destroy();
+  });
+};
 export default initEnemies;
