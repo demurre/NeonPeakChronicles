@@ -36,6 +36,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: './index.html',
+      filename: './public/index.html',
     }),
   ],
 };
