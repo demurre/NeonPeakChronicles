@@ -55,8 +55,9 @@ export const updateCardsByHand = (game) => {
 
   const enemies = getEnemiesByState_(state);
   const hero = getHeroByState_(state);
+  const boss = getBossByState_(state);
 
-  addEvents(game, { cards: newCards, enemies, hero, centerCard: null });
+  addEvents(game, { cards: newCards, enemies, hero, boss, centerCard: null });
 };
 
 const getEnemiesByState_ = (state) =>
@@ -64,9 +65,8 @@ const getEnemiesByState_ = (state) =>
     .filter(([name]) => name.includes('enemy'))
     .map(([, value]) => value.enemy);
 
-const getHeroByState_ = (state) =>
-  Object.entries(state)
-    .filter(([name]) => name.includes('hero'))
-    .flat()[1].hero;
+const getHeroByState_ = (state) => state['hero'].hero;
+
+const getBossByState_ = (state) => state['boss']?.boss;
 
 export default initCards;

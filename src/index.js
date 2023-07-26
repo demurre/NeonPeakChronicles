@@ -12,7 +12,7 @@ import addEvents from './events';
 import createEndTurnButton from './components/buttons/endTurnButton';
 import { attack, decrementAttack, resetAttack } from './characters/actions';
 import initFinalScreen from './screens/final';
-import initFinalBoss from './characters/finalBoss';
+import initBoss from './characters/boss';
 import { getEnemiesKeys } from './utilities/helpers';
 
 class MyGame extends Phaser.Scene {
@@ -39,7 +39,7 @@ class MyGame extends Phaser.Scene {
     const hero = initHero(this);
 
     if (getStateValue('stageCount') === 4) {
-      boss = initFinalBoss(this);
+      boss = initBoss(this);
       destroyEnemies();
     }
     const cards = initCards(this);
@@ -47,7 +47,7 @@ class MyGame extends Phaser.Scene {
     let centerCard = null;
 
     addEvents(this, { cards, enemies, hero, centerCard, boss });
-    createEndTurnButton(this, { cards, enemies, hero, centerCard });
+    createEndTurnButton(this, { cards, enemies, hero, centerCard, boss });
   }
 
   updateHPBar(name) {
@@ -106,18 +106,20 @@ class MyGame extends Phaser.Scene {
 
   updateEffects() {
     const currentTurn = getStateValue('turnCount');
-    const enemiesKeys = getEnemiesKeys();
+    const enemiesKeys = [...getEnemiesKeys(), 'boss'];
     enemiesKeys.forEach((key) => {
       const enemy = getStateValue(key);
-      if (enemy.effects.poison) {
-        const endTurn = enemy.effects.poison.endTurn;
-        if (currentTurn <= endTurn) attack({ game: this, damage: 1, name: key });
-      }
-      if (enemy.effects.weak) {
-        const endTurn = enemy.effects.weak.endTurn;
-        if (currentTurn < endTurn) decrementAttack({ divider: 2, name: key });
+      if (enemy) {
+        if (enemy.effects.poison) {
+          const endTurn = enemy.effects.poison.endTurn;
+          if (currentTurn <= endTurn) attack({ game: this, damage: 1, name: key });
+        }
+        if (enemy.effects.weak) {
+          const endTurn = enemy.effects.weak.endTurn;
+          if (currentTurn < endTurn) decrementAttack({ divider: 2, name: key });
 
-        if (currentTurn === endTurn) resetAttack({ name: key });
+          if (currentTurn === endTurn) resetAttack({ name: key });
+        }
       }
     });
   }
