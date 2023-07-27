@@ -20,17 +20,8 @@ module.exports = {
         use: 'raw-loader',
       },
       {
-        test: /\.(gif|png|jpe?g|svg)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: 'assets', // Output path for all images (they will be copied to /assets folder in the build)
-              publicPath: 'assets', // Public path for all images (used to reference images in the built HTML)
-            },
-          },
-        ],
+        test: /\.(gif|png|jpe?g|svg|xml)$/i,
+        use: 'file-loader',
       },
     ],
   },
