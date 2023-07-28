@@ -1,17 +1,17 @@
 const imageLoader = (game) => {
-  game.load.image('background', 'src/assets/backgrounds/start.png');
-  game.load.image('gBackground', 'src/assets/backgrounds/game.png');
-  game.load.image('finalBackground', 'src/assets/backgrounds/final.png');
-  game.load.image('hero', 'src/assets/hero/index.png');
-  game.load.image('enemy1', 'src/assets/enemies/enemy1.png');
-  game.load.image('enemy2', 'src/assets/enemies/enemy2.png');
-  game.load.image('enemy3', 'src/assets/enemies/enemy3.png');
-  game.load.image('boss', 'src/assets/enemies/boss.png');
-  game.load.image('card1', 'src/assets/cards/dmg.png');
-  game.load.image('card2', 'src/assets/cards/armor.png');
-  game.load.image('card3', 'src/assets/cards/heal.png');
-  game.load.image('card4', 'src/assets/cards/poison.png');
-  game.load.image('card5', 'src/assets/cards/weak.png');
+  game.load.image('background', 'assets/backgrounds/start.png');
+  game.load.image('gBackground', 'assets/backgrounds/game.png');
+  game.load.image('finalBackground', 'assets/backgrounds/final.png');
+  game.load.image('hero', 'assets/hero/index.png');
+  game.load.image('enemy1', 'assets/enemies/enemy1.png');
+  game.load.image('enemy2', 'assets/enemies/enemy2.png');
+  game.load.image('enemy3', 'assets/enemies/enemy3.png');
+  game.load.image('boss', 'assets/enemies/boss.png');
+  game.load.image('card1', 'assets/cards/dmg.png');
+  game.load.image('card2', 'assets/cards/armor.png');
+  game.load.image('card3', 'assets/cards/heal.png');
+  game.load.image('card4', 'assets/cards/poison.png');
+  game.load.image('card5', 'assets/cards/weak.png');
 };
 
 export default imageLoader;
