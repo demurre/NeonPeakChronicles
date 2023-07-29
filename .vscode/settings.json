@@ -1,5 +1,6 @@
 {
-    "cSpell.words": [
-        "Parens"
-    ]
+  "cSpell.words": ["Parens"],
+  "root": "./dist",
+  "port": 3000,
+  "open": true
 }

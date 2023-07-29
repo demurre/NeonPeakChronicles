@@ -1,11 +1,17 @@
-const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   mode: 'development',
   devtool: 'eval-source-map',
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.min.js',
+    path: path.resolve(__dirname, '../dist'),
+    publicPath: '/',
+  },
   module: {
     rules: [
       {
@@ -22,20 +28,19 @@ module.exports = {
       {
         test: /\.(gif|png|jpe?g|svg|xml)$/i,
         use: 'file-loader',
+        include: path.resolve(__dirname, '../assets'),
       },
     ],
   },
   plugins: [
     new CleanWebpackPlugin({
-      // eslint-disable-next-line no-undef
       root: path.resolve(__dirname, '../'),
-    }),
-    new webpack.DefinePlugin({
-      CANVAS_RENDERER: JSON.stringify(true),
-      WEBGL_RENDERER: JSON.stringify(true),
     }),
     new HtmlWebpackPlugin({
       template: './index.html',
+    }),
+    new CopyWebpackPlugin({
+      patterns: [{ from: 'assets', to: 'assets' }],
     }),
   ],
 };
