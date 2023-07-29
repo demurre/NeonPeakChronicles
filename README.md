@@ -1,4 +1,5 @@
 ## Game with using JavaScript and framework Phaser
+## To try: [neon-peak-chronicles.vercel.app ](https://neon-peak-chronicles.vercel.app/)
 ## To start: nvm use -> npm i --legacy-peer-deps -> npm run start
 ## Main Hero:
 ![mainhero](https://github.com/demurre/Rogue-like/assets/117121382/c6532db3-6b03-48a7-9c63-84cd4cddfaa9)
