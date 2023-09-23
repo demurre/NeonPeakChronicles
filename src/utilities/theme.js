@@ -17,7 +17,7 @@ const theme = {
     small: '12px',
   },
   fontFamily: {
-    primary: 'Interstatic',
+    primary: 'Satoshi',
   },
 };
 export default theme;
