@@ -1,6 +1,6 @@
 # Neon Peak Chronicles
 
-## Neon Peak Chronicles is a **_roguelike game_**, where players engage with objects and remember their actions.
+## Neon Peak Chronicles is a roguelike game, where players engage with objects and remember their actions.
 
 ### During development, I honed my skills in project architecture, webpack building, cloud deployment, and code optimization.
 
